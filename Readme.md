@@ -10,8 +10,6 @@ sudo apt install pandoc codespell
 
 ## Dependencies (MacOS)
 
-On MacOS:
-
 ```bash
 brew install findutils gnu-sed pandoc codespell
 ```
