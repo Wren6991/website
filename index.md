@@ -4,6 +4,16 @@ I'm an engineer based in Cambridge, UK.
 
 I have a lot of intrusive thoughts, and engineering is my medium for inflicting them upon the world. This website is an extension of that.
 
+## Shower Thoughts
+
+I don't have a blog, but if I did, this would be it.
+
+* [Luke's Law](shower-thoughts/lukes-law)
+* [Reversing Bits on Armv6-M](shower-thoughts/reversing-bits-on-armv6-m)
+* [Testing for Powers of Two](shower-thoughts/testing-for-powers-of-two)
+
+## External Links
+
 [GitHub](https://github.com/wren6991/)
 
 [Twitter](https://x.com/wren6991/)
