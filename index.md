@@ -12,6 +12,7 @@ I don't have a blog, but if I did, this would be it.
 * [Reversing Bits on Armv6-M](shower-thoughts/reversing-bits-on-armv6-m)
 * [Testing for Powers of Two](shower-thoughts/testing-for-powers-of-two)
 * [16-bit Data Pointers on RV32](shower-thoughts/16-bit-data-pointers-on-rv32)
+* [Averaging Pixels as Fast as Possible](shower-thoughts/averaging-pixels-as-fast-as-possible)
 
 ## External Links
 
