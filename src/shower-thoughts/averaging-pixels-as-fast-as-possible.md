@@ -23,7 +23,7 @@ We could describe this bit layout with some constants like:
 #define B_LSB  0
 ```
 
-How quickly can we calculate the average of two such pixels using 32-bit RISC-V instructions? Specifically, given two RGB565 scanline buffers of the same size (a few hundred pixels), what per-pixel throughput can we achieve? Since we're always averaging two integers, the fractional part of our result is always one. We'll assume we always want to round this _down_, i.e. truncation.
+How quickly can we calculate the average of two such pixels using 32-bit RISC-V instructions? Specifically, given two RGB565 scanline buffers of the same size (a few hundred pixels), what per-pixel throughput can we achieve? Since we're always averaging two integers, the fractional part of our result is always zero or one-half. We'll assume we always want to round this _down_, i.e. truncation.
 
 ## Performance Model
 
