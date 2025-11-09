@@ -1,14 +1,14 @@
 SRC := $(shell find src -name "*.md")
 
 .PHONY: all clean deploy build-html
-all: build/index.html build-html
+all: build-html
 
 define make-html-target
-$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1)): $1
+$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1)): $1 style.css Makefile
 	codespell $1
 	mkdir -p $(patsubst %/index/,%/,$(patsubst src/%.md, build/%/,$1))
-	pandoc --shift-heading-level-by=-1 -s $1 \
-		--variable "mainfont=Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif" \
+	pandoc --shift-heading-level-by=-1 --standalone --embed-resources $1 \
+		--css style.css \
 		-o $(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
 build-html:: $(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
 endef
