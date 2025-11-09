@@ -4,18 +4,14 @@ SRC := $(shell find src -name "*.md")
 all: build/index.html build-html
 
 define make-html-target
-$(patsubst src/%.md, build/%/index.html,$1): $1
-	mkdir -p $(patsubst src/%.md, build/%/,$1)
+$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1)): $1
 	codespell $1
-	pandoc --shift-heading-level-by=-1 -s $1 -o $(patsubst src/%.md, build/%/index.html,$1)
-build-html:: $(patsubst src/%.md, build/%/index.html,$1)
+	mkdir -p $(patsubst %/index/,%/,$(patsubst src/%.md, build/%/,$1))
+	pandoc --shift-heading-level-by=-1 -s $1 -o \
+		$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
+build-html:: $(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
 endef
 $(foreach srcfile,$(SRC),$(eval $(call make-html-target,$(srcfile))))
-
-build/index.html: index.md
-	mkdir -p build
-	codespell index.md
-	pandoc --shift-heading-level-by=-1 index.md -o build/index.html -s
 
 clean:
 	rm -rf build
