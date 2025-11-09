@@ -45,4 +45,4 @@ __bitrev32:
     bx lr
 ```
 
-Initialising `r1` to one, and then doubling it 32 times via `adcs`, sets the carry flag. This avoids having to maintain a separate loop counter, saving one conditional branch per loop as well as one register clobber.
+Initialising `r1` to one, and then doubling it 32 times via `adcs`, sets the carry flag. This avoids having to maintain a separate loop counter, saving one subtraction per loop as well as one register clobber.
