@@ -95,5 +95,3 @@ Going case by case:
 This expression is also implemented with three RISC-V instructions (`neg; xor; sltu` or `neg; xor; bltu`) so is superior to the vanilla expressions if you want to exclude zero.
 
 We can use [haroldbot](https://haroldbot.nl/?q=%28%28x+%5E+-x%29+%3C+-x%29+%3D%3D+%28x+%26%26+%28x+%26+%28x+-+1%29%29+%3D%3D+0%29) to check that `(x ^ -x) < -x` is equivalent to `x && (x & (x - 1)) == 0`.
-
-The analysis above implies `(x ^ -x) - x` is a ternary classifier for `x`: it is zero when `x` is zero, negative when `x` is a power of two, and positive when `x` is not a power of two.
