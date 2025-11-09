@@ -71,4 +71,4 @@ x & -x = 0000000010000
 
 This is an identity map if and only if the number of set bits is 0 or 1, which is true only for powers of two and zero.
 
-What are the uses for this? As far as I can tell, none: it should result in similar hardware to the original expression, and both expressions can be computed and branched upon in 3 RISC-V instructions, with the original instruction having slightly better compressibility. Still, it's interesting to think about.
+What are the uses for this? As far as I can tell, none: it should result in similar hardware to the original expression, and both expressions can be computed and branched upon in 3 RISC-V instructions, with the original formula having slightly better compressibility. Still, it's interesting to think about.

@@ -1,6 +1,6 @@
 SRC := $(shell find src -name "*.md")
 
-.PHONY: all clean deploy build-html
+.PHONY: all clean deploy serve build-html
 all: build-html
 
 define make-html-target
