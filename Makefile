@@ -4,10 +4,10 @@ SRC := $(shell find src -name "*.md")
 all: build-html
 
 define make-html-target
-$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1)): $1 style.css Makefile
+$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1)): $1 footer.md style.css Makefile
 	codespell $1
 	mkdir -p $(patsubst %/index/,%/,$(patsubst src/%.md, build/%/,$1))
-	pandoc --shift-heading-level-by=-1 --standalone --embed-resources $1 \
+	pandoc --shift-heading-level-by=-1 --standalone --embed-resources $1 footer.md \
 		--css style.css \
 		-o $(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
 build-html:: $(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/%/index.html,$1))
