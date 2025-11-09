@@ -97,7 +97,7 @@ The idea comes from this classic identity for calculating the average of two reg
 As an aside, this identity comes directly from a recursive definition of binary addition (this one does need one extra bit of integer width):
 
 ```c
- a + b       ===  (a ^ b)       + ((a & b) >> 1)
+ a + b       ===  (a ^ b)       + ((a & b) << 1)
 ```
 
 The first identity can be derived by shifting both sides of the second identity right by one bit.
