@@ -32,8 +32,8 @@ A sparse case statement is one where the case items are not numerically consecut
 
 ```c
 // Still a better workload than Dhrystone
-int is_luke(char c, int a, int b, int c, int d, int e) {
-    switch (c) {
+int is_luke(char x, int a, int b, int c, int d, int e) {
+    switch (x) {
         case 'L': return a;
         case 'U': return b;
         case 'K': return c;
