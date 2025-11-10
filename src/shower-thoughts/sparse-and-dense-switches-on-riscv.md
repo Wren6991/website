@@ -1,6 +1,6 @@
 # Sparse and Dense Switches on RISC-V
 
-This post looks at a couple of size tricks used in the [RP2350 bootrom](git@github.com:raspberrypi/pico-bootrom-rp2350.git). There is one trick for **sparse** and one trick for **dense** case statements.
+This post looks at a couple of size tricks used in the [RP2350 bootrom](https://github.com/raspberrypi/pico-bootrom-rp2350). There is one trick for **sparse** and one trick for **dense** case statements.
 
 That bootrom has some pretty gnarly size hacks because it has to fit a lot of functionality into a 32 kB mask ROM, and execute on both Arm and RISC-V. These two tricks are on the more generally useful end of the spectrum; you can apply them in your own hand-written RISC-V code if you are tight on space.
 
@@ -20,7 +20,7 @@ The RISC-V C extension has relatively few instructions which observe or modify t
 
 * `c.beqz`: if `rs1` is zero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256 B)
 
-* `c.bnez`: if `rs1` is zero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256 B)
+* `c.bnez`: if `rs1` is nonzero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256 B)
 
 That's it. One painful omission is a 16-bit counterpart for `auipc`, like `lda` from Thumb; in fact the only 16-bit instructions that write a PC-relative value into a GPR are `c.jal` and `c.jalr`, and you can bet we will make use of this fact.
 
