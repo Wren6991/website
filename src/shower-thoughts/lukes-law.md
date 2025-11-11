@@ -1,3 +1,4 @@
+%!include ../../macros.md
 # Luke's Law
 
 Theorem:

@@ -1,3 +1,4 @@
+%!include ../../macros.md
 # Averaging Pixels as Fast as Possible
 
 Suppose we have pixels stored in the RGB565 format, which I define as:

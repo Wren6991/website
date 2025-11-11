@@ -1,3 +1,4 @@
+%!include ../../macros.md
 # 16-bit Data Pointers on RV32
 
 ## Problem
@@ -58,7 +59,7 @@ The assembler is upset about this line:
 .hword foobar
 ```
 
-This is because we have asked it to create a 16-bit relocation for a pointer, and it doesn't know how to do that, or refuses to. This is a reasonable type of relocation to emit if your binary is linked in the lower 64 kB of the address space, and you can save a lot of storage for pointer literals if you don't store each of them with 16 bonus bits that are always zero. For example, SoC boot ROMs are usually small, statically linked at a known address, and extremely sensitive to static code size. This is easy to do with the `arm-none-eabi` GNU toolchain (you just get a linker error if the pointer loses bits due to truncation), but impossible with RISC-V GNU and LLVM toolchains.
+This is because we have asked it to create a 16-bit relocation for a pointer, and it doesn't know how to do that, or refuses to. This is a reasonable type of relocation to emit if your binary is linked in the lower 64%!kbyte of the address space, and you can save a lot of storage for pointer literals if you don't store each of them with 16 bonus bits that are always zero. For example, SoC boot ROMs are usually small, statically linked at a known address, and extremely sensitive to static code size. This is easy to do with the `arm-none-eabi` GNU toolchain (you just get a linker error if the pointer loses bits due to truncation), but impossible with RISC-V GNU and LLVM toolchains.
 
 As far as I can tell a suitable relocation does exist in the [RISC-V ELF PSABI](https://github.com/riscv-non-isa/riscv-elf-psabi-doc/releases/download/v1.0/riscv-abi.pdf): a normal 32-bit data relocation `.word foobar` would be emitted as an `R_RISCV_32`, and here we could just use an `R_RISCV_ADD16` with an initial value of 0. I asked a friend who is an expert on the RISC-V `lld` backend and he mumbled something about linker relaxation while staring into the distance, his eyes clouded and unfocused. I left him to his contemplation and figured out a way to make the linker do what I want using brute force.
 

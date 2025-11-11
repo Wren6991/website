@@ -3,7 +3,7 @@
 
 This post looks at a couple of size tricks used in the [RP2350 bootrom](https://github.com/raspberrypi/pico-bootrom-rp2350). There is one trick for **sparse** and one trick for **dense** case statements.
 
-That bootrom has some pretty gnarly size hacks because it has to fit a lot of functionality into a 32 kB mask ROM, and execute on both Arm and %!riscv. These two tricks are on the more generally useful end of the spectrum; you can apply them in your own hand-written %!riscv code if you are tight on space.
+That bootrom has some pretty gnarly size hacks because it has to fit a lot of functionality into a 32%!kbyte mask ROM, and execute on both Arm and %!riscv. These two tricks are on the more generally useful end of the spectrum; you can apply them in your own hand-written %!riscv code if you are tight on space.
 
 For the purpose of this post we are interested only in static code size. Performance benchmarking is for nerds.
 
@@ -11,17 +11,17 @@ For the purpose of this post we are interested only in static code size. Perform
 
 The %!riscv C extension has relatively few instructions which observe or modify the program counter:
 
-* `c.j`: set `pc` = `pc + imm` (range of 2 kB)
+* `c.j`: set `pc` = `pc + imm` (range of 2%!kbyte)
 
-* `c.jal`: set `ra` = `pc + 2`; set `pc = pc + imm` (range of 2 kB)
+* `c.jal`: set `ra` = `pc + 2`; set `pc = pc + imm` (range of 2%!kbyte)
 
 * `c.jalr`: set `ra` = `pc + 2`; set `pc = rs1` (`rs1` is any `x` register except `zero`)
 
 * `c.jr`: set `pc = rs1` (`rs1` is any `x` register except `zero`)
 
-* `c.beqz`: if `rs1` is zero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256 B)
+* `c.beqz`: if `rs1` is zero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256%!byte)
 
-* `c.bnez`: if `rs1` is nonzero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256 B)
+* `c.bnez`: if `rs1` is nonzero, set `pc = pc + imm` (`rs1` is in `x8`-`x15`, range of 256%!byte)
 
 That's it. One painful omission is a 16-bit counterpart for `auipc`, like `lda` from Thumb; in fact the only 16-bit instructions that write a PC-relative value into a GPR are `c.jal` and `c.jalr`, and you can bet we will make use of this fact.
 

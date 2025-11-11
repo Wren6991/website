@@ -1,3 +1,4 @@
+%!include ../../macros.md
 # Testing for Powers of Two
 
 There is a classic trick for testing if a number is a power of two (or zero), which you may recognise from places like Hacker's Delight:

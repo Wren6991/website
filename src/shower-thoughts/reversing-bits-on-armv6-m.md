@@ -1,3 +1,4 @@
+%!include ../../macros.md
 # Reversing Bits on Armv6-M
 
 Armv6-M lacks an `rbit` instruction, unlike Armv7-M or Armv8-M. If you do find yourself wanting to reverse bits on this architecture, in defiance of the ancestors' decision, here is one neat way of doing it:
