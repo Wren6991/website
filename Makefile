@@ -1,10 +1,10 @@
 SRC := $(shell find src -name "*.md")
 
-.PHONY: all clean deploy serve build-html
-all: build-html
+.PHONY: all clean deploy serve build-html test
+all: build-html test
 
 define make-html-target
-$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/www/%/index.html,$1)): $1 footer.md macros.md style.css Makefile
+$(patsubst %/index/index.html,%/index.html,$(patsubst src/%.md, build/www/%/index.html,$1)): $1 footer.md macros.md style.css Makefile mdp
 	codespell $1
 	mkdir -p $(patsubst %/index/,%/,$(patsubst src/%.md, build/preprocess/%/,$1))
 	./mdp $1 $(patsubst %/index/index.md,%/index.md,$(patsubst src/%.md, build/preprocess/%/index.md,$1))
@@ -26,3 +26,6 @@ deploy: all
 
 serve: all
 	python3 -m http.server -d build/www
+
+test:
+	make -C test

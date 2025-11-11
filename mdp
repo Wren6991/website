@@ -37,8 +37,7 @@ def process_from(filename, globalvars=None):
 			return k.group(0)
 
 	for i, l in enumerate(open(filename).readlines()):
-		subs_made = True
-		while subs_made:
+		while True:
 			l_ = re.sub(r"%!([a-zA-Z0-9_]+)!?", expand, l)
 			if l_ == l: break
 			l = l_
