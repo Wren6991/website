@@ -30,10 +30,8 @@ def process_from(filename, globalvars=None):
 	if globalvars is None:
 		globalvars = dict()
 
-	subs_made = False
 	def expand(k):
 		if k.group(1) in globalvars:
-			subs_made = True
 			return globalvars[k.group(1)]
 		else:
 			return k.group(0)
@@ -41,8 +39,9 @@ def process_from(filename, globalvars=None):
 	for i, l in enumerate(open(filename).readlines()):
 		subs_made = True
 		while subs_made:
-			subs_made = False
-			l = re.sub(r"%!([a-zA-Z0-9_]+)!?", expand, l)
+			l_ = re.sub(r"%!([a-zA-Z0-9_]+)!?", expand, l)
+			if l_ == l: break
+			l = l_
 
 		if g := re.match(r"^%!include\s+(.*)", l):
 			target_name = g.group(1)

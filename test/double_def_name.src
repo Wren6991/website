@@ -1,0 +1,4 @@
+%!define a x
+%!define b y
+%!define %!a%!b z
+%!xy

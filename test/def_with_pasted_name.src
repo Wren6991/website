@@ -1,0 +1,3 @@
+%!define a x
+%!define %!a!y z
+%!xy
