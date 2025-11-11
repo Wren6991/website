@@ -56,32 +56,32 @@ sparse-case.o:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00000000 <is_luke>:
-   0:   04c00813                li      a6,76
-   4:   03050563                beq     a0,a6,2e <.L4>
-   8:   00a86d63                bltu    a6,a0,22 <.L3>
-   c:   04500613                li      a2,69
-  10:   02c50163                beq     a0,a2,32 <.L5>
-  14:   04b00713                li      a4,75
-  18:   00e51363                bne     a0,a4,1e <.L2>
-  1c:   87b6                    mv      a5,a3
+   0:   04c00813        li      a6,76
+   4:   03050563        beq     a0,a6,2e <.L4>
+   8:   00a86d63        bltu    a6,a0,22 <.L3>
+   c:   04500613        li      a2,69
+  10:   02c50163        beq     a0,a2,32 <.L5>
+  14:   04b00713        li      a4,75
+  18:   00e51363        bne     a0,a4,1e <.L2>
+  1c:   87b6            mv      a5,a3
 
 0000001e <.L2>:
-  1e:   853e                    mv      a0,a5
-  20:   8082                    ret
+  1e:   853e            mv      a0,a5
+  20:   8082            ret
 
 00000022 <.L3>:
-  22:   05500713                li      a4,85
-  26:   fee51ce3                bne     a0,a4,1e <.L2>
-  2a:   87b2                    mv      a5,a2
-  2c:   bfcd                    j       1e <.L2>
+  22:   05500713        li      a4,85
+  26:   fee51ce3        bne     a0,a4,1e <.L2>
+  2a:   87b2            mv      a5,a2
+  2c:   bfcd            j       1e <.L2>
 
 0000002e <.L4>:
-  2e:   87ae                    mv      a5,a1
-  30:   b7fd                    j       1e <.L2>
+  2e:   87ae            mv      a5,a1
+  30:   b7fd            j       1e <.L2>
 
 00000032 <.L5>:
-  32:   87ba                    mv      a5,a4
-  34:   b7ed                    j       1e <.L2>
+  32:   87ba            mv      a5,a4
+  34:   b7ed            j       1e <.L2>
 
 ```
 
@@ -131,32 +131,32 @@ sparse-case.o:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00000000 <is_luke>:
-   0:   fbb50513                addi    a0,a0,-69
-   4:   c909                    beqz    a0,16 <.L1^B1>
-   6:   1569                    addi    a0,a0,-6
-   8:   c909                    beqz    a0,1a <.L2^B1>
-   a:   157d                    addi    a0,a0,-1
-   c:   c909                    beqz    a0,1e <.L3^B1>
-   e:   155d                    addi    a0,a0,-9
-  10:   c909                    beqz    a0,22 <.L4^B1>
-  12:   853e                    mv      a0,a5
-  14:   8082                    ret
+   0:   fbb50513        addi    a0,a0,-69
+   4:   c909            beqz    a0,16 <.L1^B1>
+   6:   1569            addi    a0,a0,-6
+   8:   c909            beqz    a0,1a <.L2^B1>
+   a:   157d            addi    a0,a0,-1
+   c:   c909            beqz    a0,1e <.L3^B1>
+   e:   155d            addi    a0,a0,-9
+  10:   c909            beqz    a0,22 <.L4^B1>
+  12:   853e            mv      a0,a5
+  14:   8082            ret
 
 00000016 <.L1^B1>:
-  16:   852e                    mv      a0,a1
-  18:   8082                    ret
+  16:   852e            mv      a0,a1
+  18:   8082            ret
 
 0000001a <.L2^B1>:
-  1a:   8532                    mv      a0,a2
-  1c:   8082                    ret
+  1a:   8532            mv      a0,a2
+  1c:   8082            ret
 
 0000001e <.L3^B1>:
-  1e:   8536                    mv      a0,a3
-  20:   8082                    ret
+  1e:   8536            mv      a0,a3
+  20:   8082            ret
 
 00000022 <.L4^B1>:
-  22:   853a                    mv      a0,a4
-  24:   8082                    ret
+  22:   853a            mv      a0,a4
+  24:   8082            ret
 ```
 
 The compiler output is 36 bytes, and the hand-written code is 26 bytes, for a 28% reduction.
@@ -195,48 +195,48 @@ dense-case.o:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00000000 <alu>:
-   0:   891d                    andi    a0,a0,7
-   2:   157d                    addi    a0,a0,-1
-   4:   4799                    li      a5,6
-   6:   00a7ea63                bltu    a5,a0,1a <.L2>
-   a:   000007b7                lui     a5,0x0
-   e:   00078793                mv      a5,a5
-  12:   050a                    slli    a0,a0,0x2
-  14:   953e                    add     a0,a0,a5
-  16:   411c                    lw      a5,0(a0)
-  18:   8782                    jr      a5
+   0:   891d            andi    a0,a0,7
+   2:   157d            addi    a0,a0,-1
+   4:   4799            li      a5,6
+   6:   00a7ea63        bltu    a5,a0,1a <.L2>
+   a:   000007b7        lui     a5,0x0
+   e:   00078793        mv      a5,a5
+  12:   050a            slli    a0,a0,0x2
+  14:   953e            add     a0,a0,a5
+  16:   411c            lw      a5,0(a0)
+  18:   8782            jr      a5
 
 0000001a <.L2>:
-  1a:   00c58533                add     a0,a1,a2
-  1e:   8082                    ret
+  1a:   00c58533        add     a0,a1,a2
+  1e:   8082            ret
 
 00000020 <.L10>:
-  20:   40c58533                sub     a0,a1,a2
-  24:   8082                    ret
+  20:   40c58533        sub     a0,a1,a2
+  24:   8082            ret
 
 00000026 <.L9>:
-  26:   00c5f533                and     a0,a1,a2
-  2a:   8082                    ret
+  26:   00c5f533        and     a0,a1,a2
+  2a:   8082            ret
 
 0000002c <.L8>:
-  2c:   00c5e533                or      a0,a1,a2
-  30:   8082                    ret
+  2c:   00c5e533        or      a0,a1,a2
+  30:   8082            ret
 
 00000032 <.L7>:
-  32:   00c5c533                xor     a0,a1,a2
-  36:   8082                    ret
+  32:   00c5c533        xor     a0,a1,a2
+  36:   8082            ret
 
 00000038 <.L6>:
-  38:   40c5d533                sra     a0,a1,a2
-  3c:   8082                    ret
+  38:   40c5d533        sra     a0,a1,a2
+  3c:   8082            ret
 
 0000003e <.L5>:
-  3e:   00c59533                sll     a0,a1,a2
-  42:   8082                    ret
+  3e:   00c59533        sll     a0,a1,a2
+  42:   8082            ret
 
 00000044 <.L3>:
-  44:   fff5c513                not     a0,a1
-  48:   8082                    ret
+  44:   fff5c513        not     a0,a1
+  48:   8082            ret
 ```
 
 This is mostly just performing a 32-bit lookup with `a0 & 0x7` as an index. `a0` is the `op` operand to our original C function. I'm not quite sure why it does the initial branch for `> 6`; it might be vestigial from the default case, if the compiler doesn't realise that the case is fully populated due to the AND on `op`.
@@ -250,13 +250,13 @@ Disassembly of section .rodata:
 
 00000000 <.L4>:
         ...
-                        0: R_RISCV_32   .L10
-                        4: R_RISCV_32   .L9
-                        8: R_RISCV_32   .L8
-                        c: R_RISCV_32   .L7
-                        10: R_RISCV_32  .L6
-                        14: R_RISCV_32  .L5
-                        18: R_RISCV_32  .L3
+                 0: R_RISCV_32   .L10
+                 4: R_RISCV_32   .L9
+                 8: R_RISCV_32   .L8
+                 c: R_RISCV_32   .L7
+                 10: R_RISCV_32  .L6
+                 14: R_RISCV_32  .L5
+                 18: R_RISCV_32  .L3
 ```
 
 I have two observations about this code:
