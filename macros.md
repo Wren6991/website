@@ -1,0 +1,1 @@
+%!define riscv RISC&#8209;V

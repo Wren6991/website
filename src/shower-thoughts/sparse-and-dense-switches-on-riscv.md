@@ -1,14 +1,15 @@
-# Sparse and Dense Switches on RISC-V
+%!include ../../macros.md
+# Sparse and Dense Switches on %!riscv
 
 This post looks at a couple of size tricks used in the [RP2350 bootrom](https://github.com/raspberrypi/pico-bootrom-rp2350). There is one trick for **sparse** and one trick for **dense** case statements.
 
-That bootrom has some pretty gnarly size hacks because it has to fit a lot of functionality into a 32 kB mask ROM, and execute on both Arm and RISC-V. These two tricks are on the more generally useful end of the spectrum; you can apply them in your own hand-written RISC-V code if you are tight on space.
+That bootrom has some pretty gnarly size hacks because it has to fit a lot of functionality into a 32 kB mask ROM, and execute on both Arm and %!riscv. These two tricks are on the more generally useful end of the spectrum; you can apply them in your own hand-written %!riscv code if you are tight on space.
 
 For the purpose of this post we are interested only in static code size. Performance benchmarking is for nerds.
 
 ## PC-relative Compressed Instructions
 
-The RISC-V C extension has relatively few instructions which observe or modify the program counter:
+The %!riscv C extension has relatively few instructions which observe or modify the program counter:
 
 * `c.j`: set `pc` = `pc + imm` (range of 2 kB)
 
@@ -318,7 +319,7 @@ See [here](https://github.com/raspberrypi/armulet/blob/a95adb4e3a92ca6add831e6e7
 
 ## Bonus Trick: Constant Islands in Functions
 
-RISC-V avoids emitting constants in `.text` sections because, among other reasons, it makes it difficult to mark `.text` as execute-only for security purposes. What if we didn't care about security? What if we were just nice to each other?
+%!riscv avoids emitting constants in `.text` sections because, among other reasons, it makes it difficult to mark `.text` as execute-only for security purposes. What if we didn't care about security? What if we were just nice to each other?
 
 Say we wanted to zero a list of memory regions during startup:
 
