@@ -3,6 +3,12 @@
 """
 mdp: Markdown preprocessor
 
+%!//
+
+	Comment. Continues until end of line. If this appears at the start of a
+	line, the line is dropped rather than appearing in the output (so you
+	can comment your macro files)"
+
 %!include filename
 
 	Paste contents of filename in-place in current file. Must be at start of
@@ -16,10 +22,31 @@ mdp: Markdown preprocessor
 %!foobar or %!foobar!
 
 	Expansion of macro key `foobar` to its value. Keys are alphanumeric plus
-	underscore. Expansions are recursive (infinitely, so be careful).
-	Optionally terminated with a ! to allow concatenatation.
+	underscore. Expansions are recursive. Optionally terminated with a !
+	to allow concatenatation.
+
+%!ifdef var
+
+	Inhibit output if var is not defined, until the matching %!endif.
+	Processed after the line is expanded.
+
+%!ifndef var
+
+	Inhibit output if var is defined, until the matching %!endif.
+	Processed after the line is expanded.
+
+%!endif
+	
+	Pop the scope introduced by %!ifdef or %!ifndef
+
+%!else
+
+	Invert the output inhibition introduced by %!ifdef or %!ifndef (can appear
+	multiple times)
+	
 """
 
+import argparse
 import re
 import os.path
 import sys
@@ -36,39 +63,78 @@ def process_from(filename, globalvars=None):
 		else:
 			return k.group(0)
 
-	for i, l in enumerate(open(filename).readlines()):
+	line_num = 0
+	def error_msg(msg, fatal=True):
+		sys.stderr.write(msg + f"\n ^ on line {line_num + 1} of file '{filename}'\n")
+		if fatal: sys.exit(-1)
+
+	ifdef_stack = []
+	for line_num, l in enumerate(open(filename).readlines()):
+		if len(l) >= 4 and l[:4] == "%!//": continue
+		if "%!//" in l: l = l.split("%!//")[0] + "\n"
 		while True:
 			l_ = re.sub(r"%!([a-zA-Z0-9_]+)!?", expand, l)
 			if l_ == l: break
 			l = l_
-
-		if g := re.match(r"^%!include\s+(.*)", l):
+		if l.strip() == "%!else":
+			if len(ifdef_stack) == 0:
+				error_msg("%!else outside of %!ifdef")
+			ifdef_stack[-1] = not ifdef_stack[-1]
+		elif g := re.match(r"^\s*%!ifdef\s+([a-zA-Z0-9_]+)$", l):
+			ifdef_stack.append(g.group(1) in globalvars)
+		elif g := re.match(r"^\s*%!ifndef\s+([a-zA-Z0-9_]+)$", l):
+			ifdef_stack.append(g.group(1) not in globalvars)
+		elif l.strip() == "%!endif":
+			if len(ifdef_stack) == 0:
+				error_msg("%!endif with no matching %!ifdef")
+			del ifdef_stack[-1]
+		elif g := re.match(r"^\s*%!include\s+(.*)", l):
 			target_name = g.group(1)
 			target_path = os.path.join(pwd, target_name)
 			if not os.path.exists(target_path):
-				sys.exit(f"Couldn't find include file: '{target_path}'\n" \
-					f"On line {i + 1} of file: '{filename}'")
+				error_msg(f"Couldn't find include file: '{target_path}'")
 			try:
 				yield from process_from(target_path, globalvars)
 			except StopIteration as e:
 				pass
 
-		elif g := re.match(r"^%!define\s+(\w+)\s+(.*)", l):
+		elif g := re.match(r"^\s*%!define\s+(\w+)(?:\s+(.*))?", l):
 			key = g.group(1)
 			val = g.group(2)
 			if key in ["define", "include"] or not re.match(r"[a-zA-Z0-9_]+", key):
-				sys.exit(f"Illegal macro name: '{key}'\n" \
-					f"On line {i + 1} of file: '{filename}'")
+				error_msg(f"Illegal macro name: '{key}'")
 			if key in globalvars:
-				print(f"Warning: redefining macro '{key}'" \
-					f"On line {i + 1} of file: '{filename}'")
+				error_msg(f"Warning: redefining macro '{key}'", fatal=False)
 			globalvars[key] = val.strip()
 
-		else:
+		elif all(ifdef_stack):
 			yield l
 
-if __name__ == "__main__":
-	ofile = open(sys.argv[2], "w")
-	for l in process_from(sys.argv[1]):
-		ofile.write(l)
+def main(argv):
+	parser = argparse.ArgumentParser(prog="mdp", description="mdp: Markdown preprocessor")
+	parser.add_argument("input", metavar="input.md", nargs="+",
+		help="Input markdown files for preprocessing (multiple files are concatenated)")
+	parser.add_argument("-o", dest="output",
+		help="Output file (or stdout if not specified)")
+	parser.add_argument("-D", dest="defines", metavar="foo=bar", action="append",
+		help="-Dfoo=bar defines macro foo to value bar. -Dfoo defines the macro as an empty string.")
+	args = parser.parse_args(argv)
 
+	globalvars = dict()
+	if args.defines is not None:
+		for kv in args.defines:
+			words = kv.split("=")
+			if len(words) == 1:
+				globalvars[words[0]] = ""
+			elif len(words) == 2:
+				globalvars[words[0]] = words[1]
+			else:
+				sys.exit(f"Expected -Dfoo or -Dfoo=bar, not '{kv}'")
+
+	ofile = sys.stdout if args.output is None else open(args.output, "w")
+	for f in args.input:
+		for l in process_from(f, globalvars):
+			ofile.write(l)
+
+if __name__ == "__main__":
+	main(sys.argv[1:])

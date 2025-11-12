@@ -28,3 +28,5 @@ I don't have a blog, but if I did, this would be it.
 ## Corrections
 
 This site's source is [here](https://github.com/Wren6991/website). If you find an error, please file an issue or pull request.
+
+%!define no_footer

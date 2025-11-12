@@ -1,4 +1,3 @@
-%!include ../../macros.md
 # 16-bit Data Pointers on RV32
 
 ## Problem

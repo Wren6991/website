@@ -1,4 +1,3 @@
-%!include ../../macros.md
 # Sparse and Dense Switches on %!riscv
 
 This post looks at a couple of size tricks used in the [RP2350 bootrom](https://github.com/raspberrypi/pico-bootrom-rp2350). There is one trick for **sparse** and one trick for **dense** case statements.

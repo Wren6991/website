@@ -1,0 +1,14 @@
+%!define a
+%!ifndef a
+ %!ifdef b
+1
+ %!else
+2
+ %!endif
+%!else
+ %!ifdef b
+3
+ %!else
+4
+ %!endif
+%!endif

@@ -1,0 +1,3 @@
+%!ifndef x
+a
+%!endif

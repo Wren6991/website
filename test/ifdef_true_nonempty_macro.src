@@ -1,0 +1,4 @@
+%!define x y
+%!ifdef x
+a
+%!endif
