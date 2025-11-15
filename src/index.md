@@ -14,6 +14,15 @@ I don't have a blog, but if I did, this would be it.
 * [16-bit Data Pointers on RV32](shower-thoughts/16-bit-data-pointers-on-rv32)
 * [Averaging Pixels as Fast as Possible](shower-thoughts/averaging-pixels-as-fast-as-possible)
 * [Sparse and Dense Switches on RISC-V](shower-thoughts/sparse-and-dense-switches-on-riscv)
+* [Simulating Clock Gates](shower-thoughts/simulating-clock-gates)
+
+## Projects
+
+### Hazard3
+
+Hazard3 is an embedded RISC-V core I originally developed for RP2350. It has excellent performance in a small footprint, extensive ISA support, and standard RISC-V debug over JTAG or APB. Development continues on GitHub [here](https://github.com/Wren6991/Hazard3).
+
+Read the processor documentation online [here](hazard3/doc/).
 
 ## External Links
 
