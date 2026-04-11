@@ -1,6 +1,6 @@
 # Mark's Magic Multiply
 
-This post is about a topic very near and dear to my heart. That's right: _single-precision floating-point multiplication on embedded processors_. I'll start with some background on why I've been so invested in this topic recently, walk through the implementations I've come up with on my own, and end by dissecting an absolutely ridiculous trick by Mark Owen for floating point multiplication on 32-bit embedded cores, which was the original inspiration for this post.
+This post is about a topic very near and dear to my heart. That's right: _single-precision floating-point multiplication on embedded processors_. I'll start with some background on why I've been so invested in this topic recently, walk through the implementations I've come up with on my own, and end by dissecting an absolutely ridiculous trick by Mark Owen for floating-point multiplication on 32-bit embedded cores, which was the original inspiration for this post.
 
 > **⚠️ This post contains floating point.** Floating point is known to the State of California to cause confusion and a fear response in mammalian bipeds. The standard recommendation is [What Every Computer Scientist Should Know About Floating-Point Arithmetic ](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html). The actual [IEEE 754-2008 standard](https://www.google.com/search?q=ieee+754+2008+pdf) is also uncharacteristically concise and readable, provided you ignore the fan fiction about radix != 2. For a more tactile experience try poking ones and zeroes into [IEEE 754 Calculator](https://weitz.de/ieee/) (start with binary16).
 
@@ -10,7 +10,7 @@ Lately I've been working on a custom %!riscv extension called [Xh3sfx](https://w
 
 When you compile a C program using `float` variables for a target that lacks floating-point hardware support, the compiler inserts calls to a runtime library like [libgcc](https://gcc.gnu.org/onlinedocs/gccint/Soft-float-library-routines.html) or [compiler-rt](https://github.com/llvm/llvm-project/blob/main/compiler-rt/lib/builtins/README.txt) to perform the requested operations. This is sometimes called _floating point emulation_ because it fills the role of a hardware FPU, but really it's just one approach to implementing the floating-point operations specified in IEEE 754.
 
-Although Xh3sfx is a custom extension, I'm not signing up to maintain and distribute a forked compiler. It's easier to just replace the compiler runtime routines with accelerated versions. The new routines use a handful of specialised ALU operations to handle the gritty and ugly parts of floating point formats, mixed in with regular integer instructions for the actual computation. The runtime libraries have a mostly documented and stable API surface. Adding support to your program just requires linking the acceleration library or adding its source files to your build, which is a reasonable approach for embedded firmware.
+Although Xh3sfx is a custom extension, I'm not signing up to maintain and distribute a forked compiler. It's easier to just replace the compiler runtime routines with accelerated versions. The new routines use a handful of specialised ALU operations to handle the gritty and ugly parts of floating-point formats, mixed in with regular integer instructions for the actual computation. The runtime libraries have a mostly documented and stable API surface. Adding support to your program just requires linking the acceleration library or adding its source files to your build, which is a reasonable approach for embedded firmware.
 
 For a nominal fee of a few hundred gates, Xh3sfx gives you single-precision addition in 14 cycles and multiplication in 16 cycles, ignoring function call overhead. (It can do other stuff too, these are just examples.) Qualitatively this turns floating point from "oh god why is this so slow" to something that Just Works™ in general applications code and light audio DSP. I originally posted about it on Mastodon [here](https://types.pl/@wren6991/116302915668678750). You can read about the instructions [here](https://wren.wtf/hazard3/doc/dev/#extension-xh3sfx-section) and see some library routines [here](https://github.com/Wren6991/Hazard3/blob/b9ddef48bb21ba67a50958ba9d9bc4a802c4ebae/test/sim/common/xh3sfx_float_lib.S).
 
@@ -22,7 +22,7 @@ The default single-precision multiply implementation in the Xh3sfx library has t
 * Calculate the exact significand product with a $32 \times 32 \rightarrow 64$-bit multiply (`mul; mulh`).
 * Squash the product back into a 32-bit register in a way that preserves its rounding direction.
 * Normalise the product.
-* Pack the product with the sum of the original exponents to yield the final floating point result.
+* Pack the product with the sum of the original exponents to yield the final floating-point result.
 
 Concretely it looks like this:
 
