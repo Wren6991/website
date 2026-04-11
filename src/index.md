@@ -15,6 +15,7 @@ I don't have a blog, but if I did, this would be it.
 * [Averaging Pixels as Fast as Possible](shower-thoughts/averaging-pixels-as-fast-as-possible)
 * [Sparse and Dense Switches on RISC-V](shower-thoughts/sparse-and-dense-switches-on-riscv)
 * [Simulating Clock Gates](shower-thoughts/simulating-clock-gates)
+* [Mark's Magic Multiply](shower-thoughts/marks-magic-multiply)
 
 ## Projects
 
