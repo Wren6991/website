@@ -147,7 +147,9 @@ I was happy with my implementation until Mark Owen emailed me out of the blue wi
  mov r12,r2
  lsrs r2,r0,#7    @ x[22..7] Q16
  lsrs r3,r1,#7    @ y[22..7] Q16
- muls r2,r2,r3    @ result [45..14] Q32: never an overestimate and worst case error is 2*(2^7-1)*(2^23-2^7)+(2^7-1)^2 = 2130690049 < 2^31
+ muls r2,r2,r3    @ result [45..14] Q32: never an overestimate and
+                  @ worst case error is 2*(2^7-1)*(2^23-2^7)+(2^7-1)^2
+                  @ = 2130690049 < 2^31
  muls r0,r0,r1    @ result [31..0] Q46
  lsrs r2,#18      @ result [45..32] Q14
  bcc 1f
@@ -159,7 +161,8 @@ I was happy with my implementation until Mark Owen emailed me out of the blue wi
  lsrs r0,#23      @ Q23
  lsls r2,#9
  adds r0,r2       @ cut'n'shut
- add r0,r12       @ implied 1*(x+y) to compensate for no insertion of implied 1s
+ add r0,r12       @ implied 1*(x+y) to compensate for no insertion of
+                  @ implied 1s
 @ result-1 in r3:r0 Q23+32, i.e., in range [0,3)
 ```
 
@@ -225,8 +228,8 @@ __mulsf3:
 	h3.bextmi a3, a1, 23, 8
 	h3.fcheck2e.s t0, a2, a3
 	bnez t0, __mulsf_special_exponent
-	// This uses a variant of Mark Owen's trick for calculating a 23 x 23 ->
-	// 46-bit product with two 32-bit multiplies.
+	// This uses a variant of Mark Owen's trick for calculating a 23 x
+	// 23 -> 46-bit product with two 32-bit multiplies.
 	li t2, -1 << 23
 	andn a4, a0, t2           // x - 1, U0.23
 	andn a5, a1, t2           // y - 1, U0.23
@@ -244,16 +247,19 @@ __mulsf3:
 	//
 	// * approx[45:31] is equal to exact[45:31]
 	//
-	// * approx[31] differs from exact[31]; adding 2^31 corrects bits 45:31
+	// * approx[31] differs from exact[31]; adding 2^31 corrects bits
+	//   45:31
 	//
-	// Carry into approx[32] occurs when approx[31] is set and exact[31] is
-	// clear. So, adding !exact[31] to approx[31] corrects bits 45:32 (only).
+	// Carry into approx[32] occurs when approx[31] is set and exact
+	// [31] is clear. So, adding !exact[31] to approx[31] corrects
+	// bits 45:32 (only).
 	srli a4, a4, 17
 	bltz a2, 1f
 	addi a4, a4, 1
 1:
 	srli a4, a4, 1
-	// Now: exact[45:32] in a4, exact[31:0] in a2. Pack U6.26 with sticky LSB.
+	// Now: exact[45:32] in a4, exact[31:0] in a2. Pack U6.26 with
+	// sticky LSB.
 	slli a4, a4, 12
 	li a5, 20
 	h3.ssrlsticky a2, a2, a5
