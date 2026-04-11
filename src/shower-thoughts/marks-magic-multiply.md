@@ -165,7 +165,7 @@ I was happy with my implementation until Mark Owen emailed me out of the blue wi
 
 Mark is the author of the RP2040 ROM float library, and his emails are always hard-wrapped to 80 characters. This function returns correctly-rounded single-precision multiplies with just _two_ $32 \times 32 \rightarrow 32$-bit partial products. It also does it with a lot less bit twiddling and general waffling about than my schoolbook multiplication, even with a much more limited instruction set.
 
-The core trick is to compute a 23 x 23 -> 46-bit product using two multiplies. This trick doesn't work for 24-bit inputs, so he leaves out the implicit one, multiplies just the 23-bit fractional parts, then compensates later for the missing one. Starting to work through:
+The core trick is to compute a $23 \times 23 \rightarrow 46$-bit product using two multiplies. This trick doesn't work for 24-bit inputs, so he leaves out the implicit one, multiplies just the 23-bit fractional parts, then compensates later for the missing one. Starting to work through:
 
 ```
  muls r0,r0,r1    @ result [31..0] Q46
