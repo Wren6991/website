@@ -21,7 +21,7 @@ clean:
 	rm -rf build
 
 deploy: all
-	rsync -rav build/www/. root@wren.wtf:/var/www/www.wren.wtf
+	rsync -rav build/www/. luke@wren.wtf:/var/www/www.wren.wtf
 
 serve: all
 	python3 -m http.server -d build/www
