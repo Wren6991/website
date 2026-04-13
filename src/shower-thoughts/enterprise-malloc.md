@@ -1,3 +1,5 @@
+# Enterprise Malloc
+
 If you've ever used FPGA toolchains, you know they crash. Sometimes immediately, sometimes 12 hours into a build. Sometimes it's an internal assert, but usually just a common-or-garden segfault. They also claim to support reproducible builds, yet sometimes re-running with the same inputs doesn't crash, curious 🤔
 
 [@mei@donotsta.re](https://donotsta.re/notice/AyOlmskSNl7OEE5kFk) is a real straight shooter with upper management written all over them, and they have this innovative (dare I say disruptive?) solution to enterprise software that crashes when you sneeze. I'm posting this here partly because I admire it as a piece of art and partly so I can find it next time I need it. The file name is `enterprise_malloc.c`.
