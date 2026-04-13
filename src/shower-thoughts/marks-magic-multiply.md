@@ -285,5 +285,3 @@ There are some differences. One is that the correction of the approximate produc
 
 This saves 3 cycles, for a 30-cycle `fmul`. If you hadn't noticed, all of these functions fit in the RVE registers (`x0`-`x15`), so this would run on a core in the Cortex-M0+ weight class.
 
-I think this technique can be generalised to using $32 \times 32 \rightarrow 64$-bit multiplies for the  $52 \times 52 \rightarrow 104$-bit inner product in a double-precision multiply, but I haven't proven it.
-
