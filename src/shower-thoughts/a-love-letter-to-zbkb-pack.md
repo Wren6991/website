@@ -157,7 +157,7 @@ The decision to drop `pack` and `packh` seems to me somewhat arbitrary, and like
 
 [^1]: One use for `zip` is Morton-order access e.g. to swizzled textures, but _iterating_ in Morton order is already accomplished efficiently with masked addition as described [here](https://github.com/rcoscali/ftke/blob/master/ogles/doc/fatmap2.txt#L701) or [here](https://fgiesen.wordpress.com/2011/01/17/texture-tiling-and-swizzling/).
 
-[^2]: I have used `brev8` exactly once, which is in an Armv8-M Base emulator to emulate _that_ architecture's `RBIT` instruction (`rev8` +  `brev8` reverses all bits). `RBIT` is of course useful on Armv7-M and Armv8-M Main to synthesise the missing `CTZ` as `RBIT` + `CLZ`. Its inclusion in Armv6-M and Armv8-M Base is more surprising -- perhaps for efficient emulation of the bit reverse instruction of yet a third architecture.
+[^2]: The somewhat equivalent `RBIT` (synthesises as `rev8` + `brev8`) is useful on Armv7-M and Armv8-M Main to synthesise the missing `CTZ` as `RBIT` + `CLZ`. They're also useful sometimes in CRC calculations. The most important use of bit reverse instructions is of course the efficient emulation of bit reverse instructions from other architectures.
 
 [^3]: It's actually a little different on RV64, but for brevity I'm just discussing the specifics of RV32.
 
