@@ -17,6 +17,7 @@ I don't have a blog, but if I did, this would be it.
 * [Simulating Clock Gates](shower-thoughts/simulating-clock-gates)
 * [Mark's Magic Multiply](shower-thoughts/marks-magic-multiply)
 * [Enterprise Malloc](shower-thoughts/enterprise-malloc)
+* [A Love Letter to the Zbkb `pack` Instruction](shower-thoughts/a-love-letter-to-zbkb-pack)
 
 ## Projects
 
