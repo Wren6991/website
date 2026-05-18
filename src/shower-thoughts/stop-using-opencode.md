@@ -2,11 +2,13 @@
 
 If you don't know what OpenCode is, imagine a boot stamping on a human face forever. The boot is made of TypeScript and the face is everything we have learned about security and systems software since the invention of the electronic computer in the 1940s. The [creators](https://opencode.ai/) describe it as an AI coding agent. As far as I can tell it's the most popular open-source coding agent, and it currently has 161k stars on GitHub.
 
-I've tried out OpenCode with a local LLM (separate blog post). My conclusion is that OpenCode is clown-car turboslop with a security posture of "let me bend over for you daddy". Everyone using it should stop using it.
+I've tried out OpenCode with a local LLM. My conclusion is that OpenCode is clown-car turboslop with a security posture of "let me bend over for you daddy". Everyone using it should stop using it.
 
 There are two parts to this post: **annoying things** and **alarming things**. The second part is longer. I wrote this post with reference to source code from OpenCode git version `baef5cd4`.
 
 I don't consider anything in this post to be a security disclosure. OpenCode is fundamentally a web-stack tool for piping `llm | bash`, and all the issues I describe are in the "pipe" part. The _ways_ it fails are fascinating in the fractal nature of the poor decision making, but the outcome was foregone.
+
+I tried to keep discussion of LLM use separate from whether everyone using LLMs should have their machines trivially exploited or accidentally wiped. There is a post-script with some brief thoughts on local LLMs.
 
 ## Annoying Things
 
