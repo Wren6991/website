@@ -514,8 +514,6 @@ Any discussion of coding agents versus security is swiftly met with this reply: 
 
 	* It deliberately punches a hole in `ufw` firewalls.
 
-	* The ecosystem surrounding docker is full of degenerate patterns like "run `nginx` inside a container with the configuration outside."
-
 * If everything you care about is inside the container, and a local shell inside the container is deliberately connected to the internet, what is being protected?
 
 * If the feature you are getting from Docker is "please don't recursively delete my root filesystem" then there are easier ways to achieve that, like Landlock, Seatbelt, Restricted Tokens etc.
