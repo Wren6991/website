@@ -10,6 +10,23 @@ I don't consider anything in this post to be a security disclosure. OpenCode is 
 
 I tried to keep discussion of LLM use separate from whether everyone using LLMs should have their machines trivially exploited or accidentally wiped. There is a post-script with some brief thoughts on local LLMs.
 
+<details>
+<summary>
+Update: 24th July 2026
+</summary>
+
+This has suddenly gained attention. Enough has changed between `baef5cd4` (the latest when I wrote this post) and `743f6410` (current `HEAD`) that it would be dishonest not to address it. These are the relevant changes I'm aware of:
+
+* Tool call pruning is now disabled by default.
+* Cross-session persistence of command prefix permissions is removed.
+* Bash redirections are path-validated.
+
+Other than this update notice, this post is preserved exactly as-written. Many of the points still stand; a GitHub stale bot closing a security report is jaw-dropping, and it's happened more than once.
+
+OpenCode developers are now working on version 2, which appears to be a full rewrite. I wish them the best with their release.
+
+</details>
+
 ## Annoying Things
 
 Let's put security to one side for a moment and examine how OpenCode fails as a tool even when it's *not* causing you to get your shit popped. There is a kind of Bethesda Effect with OpenCode where it's impossible to tell what is a bug and what is by design, so I stuck with a description of "annoying".
